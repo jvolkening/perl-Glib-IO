@@ -8,9 +8,18 @@ our $GIO_VERSION = '2.0';
 our $GIO_PACKAGE = 'Glib::IO';
 
 sub import {
+  my %name_corrections = (
+    'Glib::IO::file_hash'                    => 'Glib::IO::File::hash',
+    'Glib::IO::file_new_for_commandline_arg' => 'Glib::IO::File::new_for_commandline_arg',
+    'Glib::IO::file_new_for_path'            => 'Glib::IO::File::new_for_path',
+    'Glib::IO::file_new_for_uri'             => 'Glib::IO::File::new_for_uri',
+    'Glib::IO::file_parse_name'              => 'Glib::IO::File::parse_name',
+  );
+
   Glib::Object::Introspection->setup(basename => $GIO_BASENAME,
                                      version => $GIO_VERSION,
-                                     package => $GIO_PACKAGE);
+                                     package => $GIO_PACKAGE,
+                                     name_corrections => \%name_corrections);
 }
 
 1;

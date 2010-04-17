@@ -7,7 +7,7 @@ use Glib::IO;
 my $loop = Glib::MainLoop->new ();
 
 # FIXME: Glib::IO::File->new_for_path?
-my $file = Glib::IO::file_new_for_path ($0);
+my $file = Glib::IO::File::new_for_path ($0);
 
 $file->query_info_async ('*', [], 0, undef, \&info, [ 23, 'bla' ]);
 sub info {
