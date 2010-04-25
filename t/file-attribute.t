@@ -5,7 +5,7 @@ use Test::More tests => 3;
 use Glib::IO;
 
 {
-  my $file = Glib::IO::File::new_for_path ($0);
+  my $file = Glib::IO::File->new_for_path ($0);
   my $attrs = $file->query_settable_attributes ();
 
   $attrs->add ('perl::booze', 'boolean', [qw/copy-with-file copy-when-moved/]);

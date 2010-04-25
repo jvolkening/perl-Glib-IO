@@ -7,13 +7,12 @@ use Glib::IO;
 SKIP: {
   skip 'hash is broken', 1;
 
-  # FIXME: Glib::IO::File->new_for_path?
-  my $file = Glib::IO::File::new_for_path ($0);
+  my $file = Glib::IO::File->new_for_path ($0);
   ok (defined $file->hash ());
 }
 
 {
-  my $file = Glib::IO::File::new_for_path ('non-existent');
+  my $file = Glib::IO::File->new_for_path ('non-existent');
   my $result = eval { $file->read (); 1 };
   ok (!$result);
   ok (defined $@);
@@ -22,7 +21,7 @@ SKIP: {
 {
   my $loop = Glib::MainLoop->new ();
 
-  my $file = Glib::IO::File::new_for_path ($0);
+  my $file = Glib::IO::File->new_for_path ($0);
   $file->query_info_async ('*', [], 0, undef, \&info, [ 23, 'bla' ]);
   sub info {
     my ($file, $res, $data) = @_;
@@ -47,8 +46,8 @@ SKIP: {
 
   my $loop = Glib::MainLoop->new ();
 
-  my $src = Glib::IO::File::new_for_path ($0);
-  my $dst = Glib::IO::File::new_for_path ($0 . '.bak');
+  my $src = Glib::IO::File->new_for_path ($0);
+  my $dst = Glib::IO::File->new_for_path ($0 . '.bak');
   $src->copy_async ($dst, [], 0, undef, \&progress, [ 23, 'bla' ], \&read, [ 42, 'blub' ]);
 
   my $progress_called = 0;

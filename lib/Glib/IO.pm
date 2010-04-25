@@ -16,10 +16,19 @@ sub import {
     'Glib::IO::file_parse_name'              => 'Glib::IO::File::parse_name',
   );
 
-  Glib::Object::Introspection->setup(basename => $GIO_BASENAME,
-                                     version => $GIO_VERSION,
-                                     package => $GIO_PACKAGE,
-                                     name_corrections => \%name_corrections);
+  my @class_static_methods = qw(
+    Glib::IO::File::new_for_commandline_arg
+    Glib::IO::File::new_for_path
+    Glib::IO::File::new_for_uri
+    Glib::IO::File::parse_name
+  );
+
+  Glib::Object::Introspection->setup(
+    basename => $GIO_BASENAME,
+    version => $GIO_VERSION,
+    package => $GIO_PACKAGE,
+    name_corrections => \%name_corrections,
+    class_static_methods => \@class_static_methods);
 }
 
 1;
