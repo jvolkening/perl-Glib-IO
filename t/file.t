@@ -4,9 +4,7 @@ use warnings;
 use Test::More tests => 11;
 use Glib::IO;
 
-SKIP: {
-  skip 'hash is broken', 1;
-
+{
   my $file = Glib::IO::File->new_for_path ($0);
   ok (defined $file->hash ());
 }
