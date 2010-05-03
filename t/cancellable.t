@@ -5,9 +5,12 @@ use Test::More tests => 2;
 use Glib::IO;
 
 my $cancellable = Glib::IO::Cancellable->new ();
-$cancellable->connect (sub {
+$cancellable->connect (\&callback, [ 23, 'bla' ]);
+sub callback {
   my ($data) = @_;
-  is ($data->[0], 23);
-  is ($data->[1], 'bla');
-}, [ 23, 'bla' ]);
+  is_deeply ($data, [ 23, 'bla' ]);
+}
 $cancellable->cancel ();
+
+eval { $cancellable->set_error_if_cancelled (); };
+ok (defined $@);
