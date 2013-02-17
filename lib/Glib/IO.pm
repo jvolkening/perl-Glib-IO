@@ -1,6 +1,7 @@
 package Glib::IO;
 
 use strict;
+use warnings;
 use Glib::Object::Introspection;
 
 our $GIO_BASENAME = 'Gio';
@@ -8,27 +9,10 @@ our $GIO_VERSION = '2.0';
 our $GIO_PACKAGE = 'Glib::IO';
 
 sub import {
-  my %name_corrections = (
-    'Glib::IO::file_hash'                    => 'Glib::IO::File::hash',
-    'Glib::IO::file_new_for_commandline_arg' => 'Glib::IO::File::new_for_commandline_arg',
-    'Glib::IO::file_new_for_path'            => 'Glib::IO::File::new_for_path',
-    'Glib::IO::file_new_for_uri'             => 'Glib::IO::File::new_for_uri',
-    'Glib::IO::file_parse_name'              => 'Glib::IO::File::parse_name',
-  );
-
-  my @class_static_methods = qw(
-    Glib::IO::File::new_for_commandline_arg
-    Glib::IO::File::new_for_path
-    Glib::IO::File::new_for_uri
-    Glib::IO::File::parse_name
-  );
-
   Glib::Object::Introspection->setup(
     basename => $GIO_BASENAME,
     version => $GIO_VERSION,
-    package => $GIO_PACKAGE,
-    name_corrections => \%name_corrections,
-    class_static_methods => \@class_static_methods);
+    package => $GIO_PACKAGE);
 }
 
 1;
@@ -62,7 +46,7 @@ XXX
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2010 by Torsten Schoenfeld <kaffeetisch@gmx.de>
+Copyright (C) 2010, 2013 by Torsten Schoenfeld <kaffeetisch@gmx.de>
 
 This library is free software; you can redistribute it and/or modify it under
 the terms of the Lesser General Public License (LGPL).  For more information,
