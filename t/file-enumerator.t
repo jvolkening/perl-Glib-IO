@@ -4,7 +4,7 @@ use warnings;
 use Test::More tests => 3;
 use Glib::IO;
 
-my $dir = Glib::IO::File->new_for_path ('.');
+my $dir = Glib::IO::File::new_for_path ('.');
 my $enumerator = $dir->enumerate_children ('standard::*', [], undef);
 
 my $next_file = $enumerator->next_file (undef);
