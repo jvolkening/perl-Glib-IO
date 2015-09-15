@@ -14,7 +14,7 @@ SKIP: {
   skip 'get_attribute_data; not usable currently', 4;
   my ($success, $type, $memory, $status) =
     $info->get_attribute_data ('standard::type');
-  ok ($success); # should get rid of the boolean return
+  ok ($success); # get rid of the boolean return?
   is ($type, 'uint32');
   is ($memory, undef); # this seems to be garbage right now
   is ($status, 'unset');

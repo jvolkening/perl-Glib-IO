@@ -11,9 +11,9 @@ use Glib::IO;
 
 {
   my $file = Glib::IO::File::new_for_path ('non-existent');
-  my $result = eval { $file->read (); 1 };
-  ok (!$result);
-  ok (defined $@);
+  eval { $file->read () };
+  isa_ok ($@, 'Glib::IO::IOErrorEnum');
+  is ($@->value, 'not-found');
 }
 
 {
@@ -27,11 +27,7 @@ use Glib::IO;
     my $info = $file->query_info_finish ($res);
     ok (defined $info->get_name ());
     ok (defined $info->get_size ());
-
-    {
-    local $TODO = 'FIXME: user data does not get through in this case';
     is_deeply ($data, [ 23, 'bla' ]);
-    }
 
     $loop->quit ();
   }
@@ -40,7 +36,7 @@ use Glib::IO;
 }
 
 SKIP: {
-  skip 'FIXME: copy_async with progress callback is broken', 5;
+  skip 'copy_async is not introspectable currently', 5;
 
   my $loop = Glib::MainLoop->new ();
 

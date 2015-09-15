@@ -18,11 +18,7 @@ ok (defined $next_file->get_name ());
 
     my $files = $enumerator->next_files_finish ($res);
     is (scalar @{$files}, 2);
-
-    {
-    local $TODO = 'FIXME: user data does not get through in this case';
     is_deeply ($data, [ 'bla', 23 ]);
-    }
 
     $loop->quit ();
   }

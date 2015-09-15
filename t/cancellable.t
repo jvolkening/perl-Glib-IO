@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 use strict;
 use warnings;
-use Test::More tests => 2;
+use Test::More tests => 3;
 use Glib::IO;
 
 my $cancellable = Glib::IO::Cancellable->new ();
@@ -14,4 +14,5 @@ sub callback {
 $cancellable->cancel ();
 
 eval { $cancellable->set_error_if_cancelled (); };
-ok (defined $@);
+isa_ok ($@, 'Glib::IO::IOErrorEnum');
+is ($@->value, 'cancelled');
