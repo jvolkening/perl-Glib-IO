@@ -1,22 +1,6 @@
 package Glib::IO;
 
-use strict;
-use warnings;
-use Glib::Object::Introspection;
-
-our $GIO_BASENAME = 'Gio';
-our $GIO_VERSION = '2.0';
-our $GIO_PACKAGE = 'Glib::IO';
-
-sub import {
-  Glib::Object::Introspection->setup(
-    basename => $GIO_BASENAME,
-    version => $GIO_VERSION,
-    package => $GIO_PACKAGE);
-}
-
-1;
-__END__
+=encoding utf8
 
 =head1 NAME
 
@@ -34,19 +18,53 @@ XXX
 
 XXX
 
+=cut
+
+use strict;
+use warnings;
+use Glib::Object::Introspection;
+
+=head2 Wrapped libraries
+
+XXX
+
+=cut
+
+my $GIO_BASENAME = 'Gio';
+my $GIO_VERSION = '2.0';
+my $GIO_PACKAGE = 'Glib::IO';
+
+sub import {
+  Glib::Object::Introspection->setup(
+    basename => $GIO_BASENAME,
+    version => $GIO_VERSION,
+    package => $GIO_PACKAGE);
+}
+
+=head2 Customizations and overrides
+
+XXX
+
+=cut
+
+1;
+__END__
+
 =head1 SEE ALSO
 
 XXX
 
 =head1 AUTHORS
 
-=encoding utf8
+=over
 
-XXX
+=item Torsten Schönfeld <kaffeetisch@gmx.de>
+
+=back
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2010, 2013 by Torsten Schoenfeld <kaffeetisch@gmx.de>
+Copyright (C) 2010-2015 by Torsten Schönfeld <kaffeetisch@gmx.de>
 
 This library is free software; you can redistribute it and/or modify it under
 the terms of the Lesser General Public License (LGPL).  For more information,
