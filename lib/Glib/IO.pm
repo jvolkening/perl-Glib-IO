@@ -45,7 +45,48 @@ sub import {
 
 XXX
 
+=head3 Reading and writing files with the Gio API
+
+GIO reads and writes files in raw bytes format. We have to convert these data so that Perl can understand them better. Therefore we convert the bytes (= pure digits) to a bytestring without encoding The user then needs to decide what to do with it und possibly decode or encode the string in the UTF-8 Format by himself with my $content_utf8 = decode('utf-8', $content); or my $content_bytesrting = encode('utf-8', $content_utf8);
+
+This modification is implemented for the following methods:
+  
+=over
+
+=item * Glib::IO::File::load_contents
+
+=item * Glib::IO::File::replace_contents
+
+=back
+
 =cut
+
+sub Glib::IO::File::load_contents {
+	my ($gfile, $gcancellable) = @_;
+	my ($success, $raw_content, $etags) = Glib::Object::Introspection->invoke (
+		'Gio','File','load_contents',$gfile,$gcancellable
+		);
+	# the problem is, that GIO reads and writes files in raw bytes format.
+	# We have to convert these data so that Perl can understand them.
+	# Therefore we convert the bytes (= pure digits) to a bytestring without encoding
+	# The user then needs to decide what to do with it und possibly decode the string
+	# in the UTF-8 Format by himself
+	my $content = pack "C*", @{$raw_content};
+
+	return ($success,$content,$etags);
+}
+
+sub Glib::IO::File::replace_contents {
+	my ($gfile, $content, $etag, $make_backup, $flags, $gerror) = @_;
+	# the problem is, that GIO reads and writes files in raw bytes format,
+	# which means everything is passed on without any encoding/decoding.
+	# Therefore we have to convert the perlish content into an array ref containing
+	# the raw bytes
+	my @contents = unpack "C*", $content;
+	return Glib::Object::Introspection->invoke (
+		'Gio','File','replace_contents', $gfile, \@contents, $etag, $make_backup, $flags, $gerror
+		);
+}
 
 1;
 __END__
