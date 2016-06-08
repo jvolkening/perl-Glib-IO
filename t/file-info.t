@@ -4,7 +4,7 @@ use warnings;
 use Test::More tests => 8;
 use Glib::IO;
 
-my $file = Glib::IO::File::new_for_path ($0);
+my $file = Glib::IO::File->new_for_path ($0);
 my $info = $file->query_info ('*', [], undef);
 
 my $attrs = $info->list_attributes ('standard');
